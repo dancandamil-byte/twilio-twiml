@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-    <Say voice="alice" language="es-ES">AVISO: Esta es una llamada de cobro de COBRANZA GLOBAL SOLUTIONS.</Say>
-    <Pause length="1"/>
-    <Say voice="alice" language="es-ES">Si no es usted el deudor, presione 1 para terminar. Si desea continuar, presione 2.</Say>
-    <Gather numDigits="1" timeout="8" method="POST" action="https://hook.us2.make.com/klutgrps04k29eng1crxsy7nywg44v5b">
-        <Say voice="alice" language="es-ES">Presione 1 o 2.</Say>
-    </Gather>
-    <Say voice="alice" language="es-ES">Usted tiene una deuda pendiente. Presione 1 para hablar con un agente, presione 2 para reagendar, o presione 3 para no contactar mas.</Say>
-    <Gather numDigits="1" timeout="10" method="POST" action="https://hook.us2.make.com/klutgrps04k29eng1crxsy7nywg44v5b">
-        <Say voice="alice" language="es-ES">Presione una opcion.</Say>
-    </Gather>
-    <Hangup/>
-</Response>
+
