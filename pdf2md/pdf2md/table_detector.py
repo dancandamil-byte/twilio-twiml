@@ -17,16 +17,17 @@ def detect_tables(text_lines: List[str]) -> List[dict]:
             # Found potential table start
             start = i
             rows = [columns]
+            col_count = len(columns)
             i += 1
             while i < len(text_lines):
                 cols = _split_columns(text_lines[i])
-                if cols and len(cols) >= 2:
+                if cols and len(cols) == col_count:
                     rows.append(cols)
                     i += 1
                 else:
                     break
-            # Need at least 2 rows for a table
-            if len(rows) >= 2:
+            # Need at least 3 rows for a table
+            if len(rows) >= 3:
                 tables.append({
                     "start_line": start,
                     "end_line": i - 1,

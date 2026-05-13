@@ -31,25 +31,44 @@ class TestDetectTables:
         lines = [
             "Column1\tColumn2\tColumn3",
             "Data1\tData2\tData3",
+            "Data4\tData5\tData6",
         ]
         tables = detect_tables(lines)
         assert len(tables) == 1
-        assert len(tables[0]["parsed_rows"]) == 2
+        assert len(tables[0]["parsed_rows"]) == 3
 
     def test_mixed_content_table_in_middle(self):
         lines = [
             "Introduction text here.",
             "Name        Age    City",
             "Alice       30     New York",
+            "Bob         25     London",
             "More text after the table.",
         ]
         tables = detect_tables(lines)
         assert len(tables) == 1
         assert tables[0]["start_line"] == 1
-        assert tables[0]["end_line"] == 2
+        assert tables[0]["end_line"] == 3
 
     def test_empty_lines_not_table(self):
         lines = ["", "", ""]
+        tables = detect_tables(lines)
+        assert len(tables) == 0
+
+    def test_two_rows_not_enough_for_table(self):
+        lines = [
+            "Name        Age    City",
+            "Alice       30     New York",
+        ]
+        tables = detect_tables(lines)
+        assert len(tables) == 0
+
+    def test_inconsistent_column_count_not_table(self):
+        lines = [
+            "Name        Age    City",
+            "Alice       30     New York",
+            "Bob         25",
+        ]
         tables = detect_tables(lines)
         assert len(tables) == 0
 

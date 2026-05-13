@@ -14,7 +14,7 @@ def main():
 
 
 @main.command()
-@click.argument("input_path")
+@click.argument("input_path", type=click.Path(exists=True))
 @click.option(
     "--output", "-o",
     default="./output/",

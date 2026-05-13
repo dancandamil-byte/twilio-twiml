@@ -100,19 +100,27 @@ def _build_font_metadata(text: str, spans: list) -> list:
     """Build per-line font metadata from spans.
 
     Returns a list of font info dicts, one per line of text.
+    For each line, picks the dominant span (by character count) as the
+    representative font metadata.
     """
     lines = text.split("\n")
     metadata = []
-    # Simple heuristic: assign dominant span info to each line
     span_idx = 0
     for line in lines:
         if span_idx < len(spans):
-            metadata.append(spans[span_idx])
-            # Advance span index based on text consumption
+            # Collect all spans that contribute to this line
+            line_spans = []
             consumed = 0
             while span_idx < len(spans) and consumed < len(line):
+                line_spans.append(spans[span_idx])
                 consumed += len(spans[span_idx].get("text", ""))
                 span_idx += 1
+            # Pick the dominant span by character count
+            if line_spans:
+                dominant = max(line_spans, key=lambda s: len(s.get("text", "")))
+                metadata.append(dominant)
+            else:
+                metadata.append(None)
         else:
             metadata.append(None)
     return metadata
